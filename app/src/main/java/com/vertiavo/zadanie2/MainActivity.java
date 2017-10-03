@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addNewTask() {
-        final TaskListAdapter taskListAdapter = new TaskListAdapter(this, tasks);
-        mainList.setAdapter(taskListAdapter);
+        TaskListAdapter taskListAdapter = (TaskListAdapter) mainList.getAdapter();
+
         tasks.add(
                 new Task("Kupić bilet",
                         "Kupić bilet na pociąg Białystok-Warszawa",
