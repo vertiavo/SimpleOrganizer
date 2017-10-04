@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Zadanie2</string>
+    <string name="insert_title">Insert title</string>
+    <string name="insert_subtitle">Insert subtitle</string>
+    <string name="insert_date">Insert date</string>
+    <string name="click_date">Click</string>
 </resources>
