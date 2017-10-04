@@ -100,6 +100,15 @@
                 android:layout_below="@id/insert_time"
                 android:onClick="setTime"
                 android:text="@string/save"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="submitTask"
+                android:layout_below="@id/insert_time"
+                android:layout_toEndOf="@id/insert_time_button"
+                android:text="@string/submit_task_button"/>
+
         </RelativeLayout>
 
     </LinearLayout>

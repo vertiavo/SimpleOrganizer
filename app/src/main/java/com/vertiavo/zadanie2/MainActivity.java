@@ -22,7 +22,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private ListView mainList;
-    private List<Task> tasks = new LinkedList<>();
+    private List<Task> tasks = TaskSingleton.getInstance().getTasks();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

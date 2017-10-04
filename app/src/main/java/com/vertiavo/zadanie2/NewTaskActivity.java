@@ -2,6 +2,7 @@ package com.vertiavo.zadanie2;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,22 +12,29 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 public class NewTaskActivity extends AppCompatActivity {
 
+    private List<Task> tasks = TaskSingleton.getInstance().getTasks();
+
+    private EditText title;
+    private EditText subtitle;
     private DatePicker datePicker;
     private TextView dateView;
     private TimePicker timePicker;
     private TextView time;
     private int year, month, day;
+    private int hour, minute;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_task);
 
-        EditText title = (EditText) findViewById(R.id.insert_title);
-        EditText subtitle = (EditText) findViewById(R.id.insert_subtitle);
+        title = (EditText) findViewById(R.id.insert_title);
+        subtitle = (EditText) findViewById(R.id.insert_subtitle);
         dateView = (TextView) findViewById(R.id.insert_date_view);
         timePicker = (TimePicker) findViewById(R.id.insert_time);
         time = (TextView) findViewById(R.id.insert_time_current);
@@ -38,8 +46,8 @@ public class NewTaskActivity extends AppCompatActivity {
 
         showDate(year, month+1, day);
 
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
+        hour = calendar.get(Calendar.HOUR_OF_DAY);
+        minute = calendar.get(Calendar.MINUTE);
         showTime(hour, minute);
     }
 
@@ -94,5 +102,18 @@ public class NewTaskActivity extends AppCompatActivity {
         int hour = timePicker.getCurrentHour();
         int minute = timePicker.getCurrentMinute();
         showTime(hour, minute);
+    }
+
+    public void submitTask(View view) {
+        Calendar calendar = new GregorianCalendar(year, month, day, hour, minute);
+
+        tasks.add(
+                new Task(
+                        title.getText().toString(),
+                        subtitle.getText().toString(),
+                        calendar));
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 }

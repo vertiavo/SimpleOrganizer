@@ -5,5 +5,6 @@
     <string name="insert_date">Insert date</string>
     <string name="change">Change</string>
     <string name="insert_time_label">Insert time</string>
-    <string name="save">Save</string>
+    <string name="save">Save time</string>
+    <string name="submit_task_button">Submit task</string>
 </resources>
