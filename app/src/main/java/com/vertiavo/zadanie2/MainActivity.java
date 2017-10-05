@@ -1,7 +1,6 @@
 package com.vertiavo.zadanie2;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +15,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.GregorianCalendar;
-import java.util.LinkedList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,13 +27,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mainList = (ListView) findViewById(R.id.main_list);
-        mockTasks();
+        Intent intent = getIntent();
+        if (intent != null & intent.getBooleanExtra(NewTaskActivity.TASK_CREATED, false)) {
+                CharSequence created = "New task created";
+//                Snackbar.make(this, created, Snackbar.LENGTH_LONG).show();
+                Toast.makeText(this, created, Toast.LENGTH_SHORT).show();
 
-        Context context = getApplicationContext();
-        CharSequence deleted = "Deleted task";
-        int duration = Toast.LENGTH_SHORT;
-        final Toast toast = Toast.makeText(context, deleted, duration);
+        }
+
+        mainList = (ListView) findViewById(R.id.main_list);
+
+        CharSequence deleted = "Task deleted";
+        final Toast toast = Toast.makeText(this, deleted, Toast.LENGTH_SHORT);
 
         final TaskListAdapter taskListAdapter = new TaskListAdapter(this, tasks);
         mainList.setAdapter(taskListAdapter);
@@ -60,21 +63,6 @@ public class MainActivity extends AppCompatActivity {
                 builder.show();
             }
         });
-    }
-
-    private void mockTasks() {
-        tasks.add(
-                new Task("Napisać program",
-                        "Napisać program z Systemów Mobilnych",
-                        new GregorianCalendar()));
-        tasks.add(
-                new Task("Wyprać ciuchy",
-                        "Wyprać ubrania leżące w koszu na ubrania.",
-                        new GregorianCalendar(2017, 10, 21)));
-        tasks.add(
-                new Task("Kupić bilet",
-                        "Kupić bilet na pociąg Białystok-Warszawa",
-                        new GregorianCalendar(2017, 11, 5)));
     }
 
     @Override

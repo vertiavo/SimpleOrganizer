@@ -80,33 +80,17 @@
                 android:layout_height="wrap_content"
                 android:text="@string/insert_time_label"/>
 
-            <TextView
-                android:id="@+id/insert_time_current"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/insert_time_label"/>
-
             <TimePicker
                 android:id="@+id/insert_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/insert_time_current"/>
-
-            <Button
-                android:id="@+id/insert_time_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/insert_time_label"
-                android:layout_below="@id/insert_time"
-                android:onClick="setTime"
-                android:text="@string/save"/>
+                android:layout_below="@id/insert_time_label"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="submitTask"
                 android:layout_below="@id/insert_time"
-                android:layout_toEndOf="@id/insert_time_button"
                 android:text="@string/submit_task_button"/>
 
         </RelativeLayout>
