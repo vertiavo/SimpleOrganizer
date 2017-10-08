@@ -1,4 +1,4 @@
-package com.vertiavo.zadanie2;
+package com.vertiavo.zadanie2.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -14,7 +14,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.GregorianCalendar;
+import com.vertiavo.zadanie2.R;
+import com.vertiavo.zadanie2.adapter.TaskListAdapter;
+import com.vertiavo.zadanie2.util.Task;
+import com.vertiavo.zadanie2.util.TaskSingleton;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -74,20 +78,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-//        addNewTask();
         Intent intent = new Intent(this, NewTaskActivity.class);
         startActivity(intent);
         return true;
-    }
-
-    private void addNewTask() {
-        TaskListAdapter taskListAdapter = (TaskListAdapter) mainList.getAdapter();
-
-        tasks.add(
-                new Task("Kupić bilet",
-                        "Kupić bilet na pociąg Białystok-Warszawa",
-                        new GregorianCalendar(2017, 11, 5)));
-        taskListAdapter.notifyDataSetChanged();
     }
 
 }

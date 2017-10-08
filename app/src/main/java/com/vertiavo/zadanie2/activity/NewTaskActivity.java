@@ -1,12 +1,17 @@
-package com.vertiavo.zadanie2;
+package com.vertiavo.zadanie2.activity;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.InputFilter;
+import android.util.Log;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -14,13 +19,18 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.vertiavo.zadanie2.R;
+import com.vertiavo.zadanie2.util.NotificationPublisher;
+import com.vertiavo.zadanie2.util.Task;
+import com.vertiavo.zadanie2.util.TaskSingleton;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 public class NewTaskActivity extends AppCompatActivity {
 
-    public static final String TASK_CREATED = "com.vertiavo.zadanie2.NewTaskActivity.TASK_CREATED";
+    public static final String TASK_CREATED = "com.vertiavo.zadanie2.activities.NewTaskActivity.TASK_CREATED";
 
     private List<Task> tasks = TaskSingleton.getInstance().getTasks();
 
@@ -73,7 +83,7 @@ public class NewTaskActivity extends AppCompatActivity {
     @Override
     protected Dialog onCreateDialog(int id) {
         if (id == 999) {
-            return new DatePickerDialog(this, myDateListener, year, month, day);
+            return new DatePickerDialog(this, myDateListener, year, month-1, day);
         }
         return null;
     }
@@ -93,9 +103,10 @@ public class NewTaskActivity extends AppCompatActivity {
 
     public void submitTask(View view) {
         setTime();
-        Calendar calendar = new GregorianCalendar(year, month, day, hour, minute);
+        Calendar calendar = new GregorianCalendar(year, month-1, day, hour, minute);
 
         if (validateTitle() && validateDate(calendar)) {
+            setAlarm(calendar, title.getText().toString());
             tasks.add(
                     new Task(
                             title.getText().toString(),
@@ -123,4 +134,27 @@ public class NewTaskActivity extends AppCompatActivity {
             return false;
         } else return true;
     }
+
+    private Notification getNotification(String content) {
+
+        Notification.Builder builder = new Notification.Builder(this);
+        builder.setContentTitle("Scheduled notification");
+        builder.setContentText(content);
+        builder.setSmallIcon(R.drawable.ic_event_note_black_24dp);
+        return builder.build();
+
+    }
+
+    public void setAlarm(Calendar calendar, String taskTitle){
+        Intent intent = new Intent(this, NotificationPublisher.class);
+        intent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
+        intent.putExtra(NotificationPublisher.NOTIFICATION, getNotification("Task"));
+        intent.putExtra(NotificationPublisher.TASK_TITLE, taskTitle);
+
+        PendingIntent sender = PendingIntent.getBroadcast(this, 192837, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager am = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+    }
+
 }

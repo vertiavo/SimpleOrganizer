@@ -1,4 +1,4 @@
-package com.vertiavo.zadanie2;
+package com.vertiavo.zadanie2.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.vertiavo.zadanie2.R;
+import com.vertiavo.zadanie2.util.Task;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

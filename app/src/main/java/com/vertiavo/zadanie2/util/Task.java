@@ -1,4 +1,4 @@
-package com.vertiavo.zadanie2;
+package com.vertiavo.zadanie2.util;
 
 import java.sql.Timestamp;
 import java.util.Calendar;

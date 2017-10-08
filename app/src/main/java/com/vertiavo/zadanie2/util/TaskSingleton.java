@@ -1,4 +1,4 @@
-package com.vertiavo.zadanie2;
+package com.vertiavo.zadanie2.util;
 
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
