@@ -121,7 +121,7 @@ public class NewTaskActivity extends AppCompatActivity {
 
     private boolean validateTitle() {
         if (title.getText().toString().length() == 0) {
-            title.setError("Title is required!");
+            title.setError(getString(R.string.title_required));
             return false;
         } else return true;
     }
@@ -129,7 +129,7 @@ public class NewTaskActivity extends AppCompatActivity {
     private boolean validateDate(Calendar calendar) {
         Calendar current = new GregorianCalendar();
         if (current.compareTo(calendar) > 0) {
-            CharSequence deleted = "You can't select date in the past.";
+            CharSequence deleted = getString(R.string.date_in_past);
             Toast.makeText(this, deleted, Toast.LENGTH_SHORT).show();
             return false;
         } else return true;
@@ -138,7 +138,7 @@ public class NewTaskActivity extends AppCompatActivity {
     private Notification getNotification(String content) {
 
         Notification.Builder builder = new Notification.Builder(this);
-        builder.setContentTitle("Scheduled notification");
+        builder.setContentTitle(getString(R.string.scheduled_notification));
         builder.setContentText(content);
         builder.setSmallIcon(R.drawable.ic_event_note_black_24dp);
         return builder.build();
@@ -148,7 +148,7 @@ public class NewTaskActivity extends AppCompatActivity {
     public void setAlarm(Calendar calendar, String taskTitle){
         Intent intent = new Intent(this, NotificationPublisher.class);
         intent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
-        intent.putExtra(NotificationPublisher.NOTIFICATION, getNotification("Task"));
+        intent.putExtra(NotificationPublisher.NOTIFICATION, getNotification(getString(R.string.notification_title_task)));
         intent.putExtra(NotificationPublisher.TASK_TITLE, taskTitle);
 
         PendingIntent sender = PendingIntent.getBroadcast(this, 192837, intent, PendingIntent.FLAG_UPDATE_CURRENT);

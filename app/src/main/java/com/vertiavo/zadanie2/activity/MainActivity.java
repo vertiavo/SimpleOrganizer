@@ -37,28 +37,28 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null & intent.getBooleanExtra(NewTaskActivity.TASK_CREATED, false)) {
-            CharSequence created = "New task created";
+            CharSequence created = getString(R.string.new_task_created);
             Snackbar snackbar = Snackbar.make(findViewById(R.id.mainLayout), created, Snackbar.LENGTH_SHORT);
-            snackbar.setAction("Undo", new MyUndoListener(taskListAdapter));
+            snackbar.setAction(R.string.undo, new MyUndoListener(taskListAdapter));
             snackbar.show();
         }
 
         mainList = (ListView) findViewById(R.id.main_list);
 
-        CharSequence deleted = "Task deleted";
+        CharSequence deleted = getString(R.string.task_deleted);
         final Toast toast = Toast.makeText(this, deleted, Toast.LENGTH_SHORT);
 
         mainList.setAdapter(taskListAdapter);
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to delete?")
-                .setTitle("Warning");
+        builder.setMessage(R.string.confirm_delete)
+                .setTitle(R.string.warning);
 
         mainList.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
-                builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         tasks.remove(i);
@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
                         taskListAdapter.notifyDataSetChanged();
                     }
                 });
-                builder.setNegativeButton("Cancel", null);
+                builder.setNegativeButton(R.string.cancel, null);
                 builder.show();
             }
         });

@@ -7,4 +7,15 @@
     <string name="insert_time_label">Insert time</string>
     <string name="save">Save time</string>
     <string name="submit_task_button">Submit task</string>
+    <string name="new_task_created">New task created</string>
+    <string name="undo">Undo</string>
+    <string name="task_deleted">Task deleted</string>
+    <string name="confirm_delete">Are you sure you want to delete?</string>
+    <string name="warning">Warning</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="title_required">Title is required!</string>
+    <string name="date_in_past">You can\'t select date in the past.</string>
+    <string name="scheduled_notification">Scheduled notification</string>
+    <string name="notification_title_task">Task</string>
 </resources>
