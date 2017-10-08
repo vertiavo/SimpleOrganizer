@@ -44,6 +44,7 @@ public class NewTaskActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_task);
 
@@ -62,9 +63,11 @@ public class NewTaskActivity extends AppCompatActivity {
 
         hour = calendar.get(Calendar.HOUR_OF_DAY);
         minute = calendar.get(Calendar.MINUTE);
+
     }
 
     private void showDate(int year, int month, int day) {
+
         this.year = year;
         this.month = month;
         this.day = day;
@@ -74,6 +77,7 @@ public class NewTaskActivity extends AppCompatActivity {
                 .append(month)
                 .append("/")
                 .append(year));
+
     }
 
     public void setDate(View view) {
@@ -82,10 +86,12 @@ public class NewTaskActivity extends AppCompatActivity {
 
     @Override
     protected Dialog onCreateDialog(int id) {
+
         if (id == 999) {
             return new DatePickerDialog(this, myDateListener, year, month-1, day);
         }
         return null;
+
     }
 
     private DatePickerDialog.OnDateSetListener myDateListener
@@ -97,42 +103,51 @@ public class NewTaskActivity extends AppCompatActivity {
     };
 
     public void setTime() {
+
         hour = timePicker.getCurrentHour();
         minute = timePicker.getCurrentMinute();
+
     }
 
     public void submitTask(View view) {
+
         setTime();
         Calendar calendar = new GregorianCalendar(year, month-1, day, hour, minute);
 
         if (validateTitle() && validateDate(calendar)) {
-            setAlarm(calendar, title.getText().toString());
+            PendingIntent sender = setAlarm(calendar, title.getText().toString());
             tasks.add(
                     new Task(
                             title.getText().toString(),
                             subtitle.getText().toString(),
-                            calendar));
+                            calendar,
+                            sender));
 
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra(TASK_CREATED, true);
             startActivity(intent);
         }
+
     }
 
     private boolean validateTitle() {
+
         if (title.getText().toString().length() == 0) {
             title.setError(getString(R.string.title_required));
             return false;
         } else return true;
+
     }
 
     private boolean validateDate(Calendar calendar) {
+
         Calendar current = new GregorianCalendar();
         if (current.compareTo(calendar) > 0) {
             CharSequence deleted = getString(R.string.date_in_past);
             Toast.makeText(this, deleted, Toast.LENGTH_SHORT).show();
             return false;
         } else return true;
+
     }
 
     private Notification getNotification(String content) {
@@ -145,16 +160,20 @@ public class NewTaskActivity extends AppCompatActivity {
 
     }
 
-    public void setAlarm(Calendar calendar, String taskTitle){
+    public PendingIntent setAlarm(Calendar calendar, String taskTitle){
+
         Intent intent = new Intent(this, NotificationPublisher.class);
         intent.putExtra(NotificationPublisher.NOTIFICATION_ID, 1);
-        intent.putExtra(NotificationPublisher.NOTIFICATION, getNotification(getString(R.string.notification_title_task)));
+        Notification notification = getNotification(getString(R.string.notification_title_task));
+        intent.putExtra(NotificationPublisher.NOTIFICATION, notification);
         intent.putExtra(NotificationPublisher.TASK_TITLE, taskTitle);
 
         PendingIntent sender = PendingIntent.getBroadcast(this, 192837, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager am = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
+        am.set(AlarmManager.RTC_WAKEUP, 5000, sender);
+
+        return sender;
     }
 
 }

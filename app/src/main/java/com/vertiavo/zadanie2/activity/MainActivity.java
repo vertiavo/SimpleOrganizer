@@ -1,6 +1,8 @@
 package com.vertiavo.zadanie2.activity;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -61,6 +63,8 @@ public class MainActivity extends AppCompatActivity {
                 builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
+                        AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                        am.cancel(tasks.get(i).getPendingIntent());
                         tasks.remove(i);
                         toast.show();
                         taskListAdapter.notifyDataSetChanged();

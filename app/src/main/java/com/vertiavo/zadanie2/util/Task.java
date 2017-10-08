@@ -1,5 +1,7 @@
 package com.vertiavo.zadanie2.util;
 
+import android.app.PendingIntent;
+
 import java.sql.Timestamp;
 import java.util.Calendar;
 
@@ -13,12 +15,21 @@ public class Task {
     private String description;
     private Calendar deadline;
     private Timestamp createTime;
+    private PendingIntent pendingIntent;
 
     public Task(String title, String description, Calendar deadline) {
         this.title = title;
         this.description = description;
         this.deadline = deadline;
         this.createTime = new Timestamp(System.currentTimeMillis());
+    }
+
+    public Task(String title, String description, Calendar deadline, PendingIntent pendingIntent) {
+        this.title = title;
+        this.description = description;
+        this.deadline = deadline;
+        this.createTime = new Timestamp(System.currentTimeMillis());
+        this.pendingIntent = pendingIntent;
     }
 
     public String getTitle() {
@@ -49,4 +60,11 @@ public class Task {
         return createTime;
     }
 
+    public PendingIntent getPendingIntent() {
+        return pendingIntent;
+    }
+
+    public void setPendingIntent(PendingIntent pendingIntent) {
+        this.pendingIntent = pendingIntent;
+    }
 }
