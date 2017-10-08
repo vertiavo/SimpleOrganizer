@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 
 import com.vertiavo.zadanie2.R;
 import com.vertiavo.zadanie2.adapter.TaskListAdapter;
+import com.vertiavo.zadanie2.util.MyUndoListener;
 import com.vertiavo.zadanie2.util.Task;
 import com.vertiavo.zadanie2.util.TaskSingleton;
 
@@ -31,12 +33,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        final TaskListAdapter taskListAdapter = new TaskListAdapter(this, tasks);
+
         Intent intent = getIntent();
         if (intent != null & intent.getBooleanExtra(NewTaskActivity.TASK_CREATED, false)) {
-                CharSequence created = "New task created";
-//                Snackbar.make(this, created, Snackbar.LENGTH_LONG).show();
-                Toast.makeText(this, created, Toast.LENGTH_SHORT).show();
-
+            CharSequence created = "New task created";
+            Snackbar snackbar = Snackbar.make(findViewById(R.id.mainLayout), created, Snackbar.LENGTH_SHORT);
+            snackbar.setAction("Undo", new MyUndoListener(taskListAdapter));
+            snackbar.show();
         }
 
         mainList = (ListView) findViewById(R.id.main_list);
@@ -44,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         CharSequence deleted = "Task deleted";
         final Toast toast = Toast.makeText(this, deleted, Toast.LENGTH_SHORT);
 
-        final TaskListAdapter taskListAdapter = new TaskListAdapter(this, tasks);
         mainList.setAdapter(taskListAdapter);
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
