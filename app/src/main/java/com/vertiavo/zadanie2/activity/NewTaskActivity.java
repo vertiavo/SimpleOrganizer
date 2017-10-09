@@ -171,7 +171,7 @@ public class NewTaskActivity extends AppCompatActivity {
         PendingIntent sender = PendingIntent.getBroadcast(this, 192837, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         AlarmManager am = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        am.set(AlarmManager.RTC_WAKEUP, 5000, sender);
+        am.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), sender);
 
         return sender;
     }

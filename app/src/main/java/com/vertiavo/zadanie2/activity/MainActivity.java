@@ -64,7 +64,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         AlarmManager am = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                        am.cancel(tasks.get(i).getPendingIntent());
+                        if (tasks.get(i).getPendingIntent() != null) {
+                            am.cancel(tasks.get(i).getPendingIntent());
+                        }
                         tasks.remove(i);
                         toast.show();
                         taskListAdapter.notifyDataSetChanged();
